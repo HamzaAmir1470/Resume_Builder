@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Layout from './pages/layout'
+import Layout from './pages/Layout'
 import Dashboard from './pages/Dashboard'
 import ResumeBuilder from './pages/ResumeBuilder'
 import Preview from './pages/Preview'
