@@ -15,11 +15,7 @@ const startServer = async () => {
         await connectDB(); // <-- FIXED: now inside async function
 
         app.use(express.json());
-        app.use(cors({
-            origin: 'https://resume-builder-m6zb248k9-hamzaamir-designs-projects.vercel.app/',
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            credentials: true
-        }));
+        app.use(cors({ origin: 'https://resume-builder-8kdk.vercel.app' }));
 
         app.get('/', (req, res) => res.send("Server is live...."));
 
@@ -36,4 +32,5 @@ const startServer = async () => {
     }
 };
 
-startServer(); // <-- Now server actually starts
+startServer(); 
+module.exports = app; 
