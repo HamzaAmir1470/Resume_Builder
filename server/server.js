@@ -11,7 +11,7 @@ const app = express();
 // 1. Immediately establish Middleware (CRITICAL for Vercel CORS)
 app.use(express.json());
 app.use(cors({
-    origin: 'https://resume-builder-8kdk.vercel.app',
+    origin: "https://resume-builder-m6zb248k9-hamzaamir-designs-projects.vercel.app/",
     credentials: true
 }));
 
