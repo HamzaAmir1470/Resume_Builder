@@ -7,30 +7,30 @@ import resumeRouter from './routes/resumeRoutes.js';
 import aiRouter from './routes/aiRoutes.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Run server + DB connection properly
-const startServer = async () => {
-    try {
-        await connectDB(); // <-- FIXED: now inside async function
+// 1. Immediately establish Middleware (CRITICAL for Vercel CORS)
+app.use(express.json());
+app.use(cors({
+    origin: 'https://resume-builder-8kdk.vercel.app',
+    credentials: true
+}));
 
-        app.use(express.json());
-        app.use(cors({ origin: 'https://resume-builder-8kdk.vercel.app' }));
+// 2. Connect to MongoDB lazily so it works perfectly in serverless environments
+connectDB().catch(err => console.error("Database connection failed:", err));
 
-        app.get('/', (req, res) => res.send("Server is live...."));
+// 3. Define Routes
+app.get('/', (req, res) => res.send("Server is live...."));
+app.use('/api/users', userRouter);
+app.use('/api/resumes', resumeRouter);
+app.use('/api/ai', aiRouter);
 
-        app.use('/api/users', userRouter);
-        app.use('/api/resumes', resumeRouter);
-        app.use('/api/ai', aiRouter);
+// 4. ONLY call app.listen if running locally (Vercel ignores app.listen)
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server running locally on PORT ${PORT}`);
+    });
+}
 
-        app.listen(PORT, () => {
-            console.log(`Server running on PORT ${PORT}`);
-        });
-
-    } catch (error) {
-        console.error("Server startup failed:", error);
-    }
-};
-
-startServer(); 
-module.exports = app; 
+// 5. Export for Vercel's serverless handler
+export default app;
