@@ -8,23 +8,35 @@ import aiRouter from './routes/aiRoutes.js';
 
 const app = express();
 
-// 1. Immediately establish Middleware (CRITICAL for Vercel CORS)
 app.use(express.json());
+
+const allowedOrigins = [
+    "https://resume-builder-8kdk.vercel.app",
+    "http://localhost:5173"
+];
+
 app.use(cors({
-    origin: "https://resume-builder-m6zb248k9-hamzaamir-designs-projects.vercel.app/",
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }));
 
-// 2. Connect to MongoDB lazily so it works perfectly in serverless environments
 connectDB().catch(err => console.error("Database connection failed:", err));
 
-// 3. Define Routes
 app.get('/', (req, res) => res.send("Server is live...."));
 app.use('/api/users', userRouter);
 app.use('/api/resumes', resumeRouter);
 app.use('/api/ai', aiRouter);
 
-// 4. ONLY call app.listen if running locally (Vercel ignores app.listen)
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
@@ -32,5 +44,4 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// 5. Export for Vercel's serverless handler
 export default app;
