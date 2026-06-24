@@ -99,7 +99,6 @@ const Dashboard = () => {
     loadAllResumes();
   }, [])
 
-  console.log("Token being sent:", token);
 
   return (
     <div>

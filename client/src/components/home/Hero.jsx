@@ -8,11 +8,11 @@ const Hero = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
 
     const logos = [
-        'https://saasly.prebuiltui.com/assets/companies-logo/instagram.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/framer.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/microsoft.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/huawei.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/walmart.svg',
+        'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg',
+        'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/framer.svg',
+        'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg',
+        'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/huawei.svg',
+        'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/walmart.svg',
     ]
     return (
         <>
@@ -37,8 +37,8 @@ const Hero = () => {
                         <Link to='/app?state=login' className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" hidden={user} >
                             Login
                         </Link>
-                        <Link  to='/app' className='hidden md:block px-8 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white' hidden={!user}>
-                        Dashboard
+                        <Link to='/app' className='hidden md:block px-8 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white' hidden={!user}>
+                            Dashboard
                         </Link>
                     </div>
 
