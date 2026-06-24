@@ -2,8 +2,11 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/api/(.*)",
+      "destination": "/server/$1" 
+    },
+    {
+      "source": "/((?!api).*)"
     }
   ]
 }
