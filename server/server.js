@@ -9,27 +9,26 @@ import aiRouter from './routes/aiRoutes.js';
 const app = express();
 
 app.use(express.json());
-
 const allowedOrigins = [
     "https://resumefrontend-tawny.vercel.app",
-    "http://localhost:5173"
+    "http://localhost:5173",
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
+    origin(origin, callback) {
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+        if (
+            allowedOrigins.includes(origin) ||
+            /\.vercel\.app$/.test(origin)
+        ) {
+            return callback(null, true);
         }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-}));
 
+        return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+}));
 
 connectDB().catch(err => console.error("Database connection failed:", err));
 
