@@ -23,15 +23,12 @@ const App = () => {
         return;
       }
 
-      console.log("Token sent from App.jsx:", token);
 
-      //  FIX: Send token with Bearer prefix
       const { data } = await api.get('/api/users/data', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       if (data.user) {
-        // Store user + token in redux
         dispatch(login({ token, user: data.user }));
       }
 
@@ -40,7 +37,6 @@ const App = () => {
     } catch (error) {
       console.log("User fetch failed:", error?.response?.data || error.message);
 
-      // Token invalid → remove token from localStorage
       localStorage.removeItem('token');
 
       dispatch(setLoading(false));
@@ -49,7 +45,7 @@ const App = () => {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  });
 
   return (
     <>
